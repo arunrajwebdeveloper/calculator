@@ -168,6 +168,18 @@ function Calculator() {
                   </semantics>
                 </math>
               </div>
+              <div
+                className="btn"
+                onClick={() => handleClick("\\left(\\right)")}
+              >
+                {"("}
+              </div>
+              <div
+                className="btn"
+                onClick={() => handleClick("\\left(\\right)")}
+              >
+                {")"}
+              </div>
             </div>
             <div className="operations">
               {operationsKeys?.map(({ label, value }) => (
