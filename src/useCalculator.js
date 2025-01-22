@@ -51,15 +51,27 @@ export const useCalculator = () => {
   ];
 
   const operationsKeys = [
-    { label: "÷", value: "\\div" },
+    // { label: "÷", value: "\\div" },
+    { label: "÷", value: "\\frac{}{}" },
     { label: "×", value: "\\times" },
     { label: "-", value: "-" },
     { label: "+", value: "+" },
     { label: ".", value: "." },
   ];
 
+  const keepFocused = (mathfield) => {
+    mathfield?.focus();
+  };
+
   const mathQuillConfig = {
     restrictMismatchedBrackets: true,
+    autoSubscriptNumerals: true,
+    // handlers: {
+    //   downOutOf: (mathField) => console.log("downOutOf"),
+    //   upOutOf: (mathField) => console.log("upOutOf"),
+    //   edit: (mathField) => console.log("edit"),
+    //   enter: (mathField) => console.log("enter"),
+    // },
   };
 
   const findExistingVar = (keyname) => {
@@ -228,9 +240,9 @@ export const useCalculator = () => {
 
   const handleChange = (e) => {
     const rawLatex = e?.latex();
-    const formattedLatex = rawLatex.replace(/\\cdot/g, "\\times");
-
+    const formattedLatex = rawLatex?.replace(/\\cdot/g, "\\times");
     setExpression(formattedLatex);
+    keepFocused(e);
   };
 
   const clearScreen = () => {
@@ -281,5 +293,6 @@ export const useCalculator = () => {
     removeVariable,
     customVariables,
     setCustomVariables,
+    keepFocused,
   };
 };

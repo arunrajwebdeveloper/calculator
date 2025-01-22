@@ -20,6 +20,7 @@ function Calculator() {
     mathQuillConfig,
     removeVariable,
     customVariables,
+    keepFocused,
   } = useCalculator();
 
   return (
@@ -33,6 +34,7 @@ function Calculator() {
             latex={expression}
             onChange={handleChange}
             onKeyDown={handleKeyPress}
+            mathquillDidMount={keepFocused}
           />
           <div className="output">{result ? `= ${result}` : 0}</div>
         </label>
