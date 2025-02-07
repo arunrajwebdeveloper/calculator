@@ -69,8 +69,9 @@ export const useCalculator = () => {
     // handlers: {
     //   downOutOf: (mathField) => console.log("downOutOf"),
     //   upOutOf: (mathField) => console.log("upOutOf"),
-    //   edit: (mathField) => console.log("edit"),
-    //   enter: (mathField) => console.log("enter"),
+    edit: (mathField) => mathField?.focus(),
+    enter: (mathField) => console.log("enter"),
+    enter: (mathField) => console.log(mathField.cmd()),
     // },
   };
 
@@ -266,6 +267,9 @@ export const useCalculator = () => {
         const mathExpression = latexToMathjs(expression);
         const evaluateResult = math.evaluate(mathExpression, allVariables);
 
+        // const code1 = math.compile(mathExpression);
+        // const evaluateResult = code1.evaluate([allVariables]);
+
         if (typeof evaluateResult === "number" && !isNaN(evaluateResult)) {
           setResult(evaluateResult.toFixed(3).replace(/\.000$/, ""));
         } else {
@@ -276,6 +280,8 @@ export const useCalculator = () => {
       setResult("Error: Invalid expression");
     }
   };
+
+  console.log("expression :>> ", expression);
 
   return {
     definedVariables,

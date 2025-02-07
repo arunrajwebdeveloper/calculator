@@ -1,0 +1,115 @@
+.wrp {
+  width: 382px;
+  margin: 100px auto 0;
+  padding: 20px;
+  border: 1px solid #444;
+  background-color: #fff;
+}
+
+.math-field-element .mq-editable-field,
+.result-span {
+  font-size: 28px;
+  padding: 20px;
+  text-align: right;
+  width: 100%;
+  border: 1px solid #444 !important;
+  box-shadow: none !important;
+  outline: 0 !important;
+  background-color: #e8e9e1;
+}
+.result-span {
+  padding: 8px 20px;
+  font-size: 20px;
+  margin-top: -1px;
+  border-top-color: #ccc !important;
+  position: relative;
+  z-index: 2;
+}
+.btn-keys {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-top: 10px;
+}
+.btn-keys .key-btn {
+  height: 50px;
+  width: 50px;
+  cursor: pointer;
+  font-size: 16px;
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.btn-keys .key-btn svg {
+  height: 16px;
+  vertical-align: middle;
+}
+
+.variable-list {
+  border: 1px solid #444;
+  margin-top: -1px;
+}
+
+.variable-list .variable-item:not(:last-child) {
+  border-bottom: 1px solid #ccc;
+}
+.variable-list .variable-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  height: 38px;
+  gap: 8px;
+}
+.variable-list .variable-item button {
+  border: 0 !important;
+  background-color: transparent;
+  font-size: 16px;
+  color: #555;
+  padding: 0;
+  cursor: pointer;
+}
+.variable-list .variable-item button.var-clear {
+  width: 18px;
+  height: 18px;
+  line-height: normal;
+  background-color: #e92121;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 12px;
+}
+.variable-list .variable-item button.variable-item {
+  flex: 1;
+}
+
+.footer-note {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  background-color: #ffdfa7;
+  padding: 12px 0;
+  user-select: none;
+}
+
+.footer-note p {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: normal;
+}
+.footer-note p kbd {
+  padding: 10px;
+  display: inline-block;
+  background-color: #ffce77;
+  line-height: normal;
+  margin: 0 7px;
+  text-align: center;
+  border-radius: 7px;
+  border: 1px solid #ffc050;
+}

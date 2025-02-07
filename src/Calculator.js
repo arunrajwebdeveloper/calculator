@@ -1,10 +1,19 @@
-import React from "react";
+import React, { useRef } from "react";
 import { addStyles, EditableMathField } from "react-mathquill";
 import { useCalculator } from "./useCalculator";
 
 addStyles();
 
 function Calculator() {
+  const mathFieldRef = useRef(null);
+
+  const insertToMathField = (latex) => {
+    if (mathFieldRef.current) {
+      mathFieldRef.current.cmd(latex);
+      mathFieldRef.current.focus();
+    }
+  };
+
   const {
     definedVariables,
     digitKeys,
@@ -34,10 +43,105 @@ function Calculator() {
             latex={expression}
             onChange={handleChange}
             onKeyDown={handleKeyPress}
-            mathquillDidMount={keepFocused}
+            // mathquillDidMount={keepFocused}
+
+            mathquillDidMount={(mathField) =>
+              (mathFieldRef.current = mathField)
+            }
           />
           <div className="output">{result ? `= ${result}` : 0}</div>
         </label>
+
+        {/* <div className="grid grid-cols-4 gap-2 mt-4">
+          {[
+            { label: "0", cmd: "0" },
+            { label: "1", cmd: "1" },
+            { label: "2", cmd: "2" },
+            { label: "3", cmd: "3" },
+            { label: "4", cmd: "4" },
+            { label: "5", cmd: "5" },
+            { label: "6", cmd: "6" },
+            { label: "7", cmd: "7" },
+            { label: "8", cmd: "8" },
+            { label: "9", cmd: "9" },
+            { label: "%", cmd: "%" },
+            { label: "(", cmd: "(" },
+            { label: ")", cmd: ")" },
+            { label: "[", cmd: "[" },
+            { label: "]", cmd: "]" },
+            { label: "+", cmd: "+" },
+            { label: "-", cmd: "-" },
+            { label: "*", cmd: "*" },
+            { label: "/", cmd: "/" },
+            { label: "√", cmd: "\\sqrt" },
+            { label: "ⁿ√", cmd: "\\nthroot" },
+            { label: "π", cmd: "\\pi" },
+            { label: "θ", cmd: "\\theta" },
+            { label: "∑", cmd: "\\sum" },
+            { label: "∫", cmd: "\\int" },
+            { label: "a/b", cmd: "\\frac" },
+            { label: "∞", cmd: "\\infty" },
+          ].map((button, index) => (
+            <button
+              key={index}
+              onClick={() => insertToMathField(button.cmd)}
+              className="bg-blue-500 text-white px-4 py-2 rounded shadow hover:bg-blue-600"
+            >
+              {button.label}
+            </button>
+          ))}
+        </div> */}
+
+        <div
+          style={{
+            display: "flex",
+            gap: "5px",
+            flexWrap: "wrap",
+          }}
+        >
+          {[
+            { label: "0", cmd: "0" },
+            { label: "1", cmd: "1" },
+            { label: "2", cmd: "2" },
+            { label: "3", cmd: "3" },
+            { label: "4", cmd: "4" },
+            { label: "5", cmd: "5" },
+            { label: "6", cmd: "6" },
+            { label: "7", cmd: "7" },
+            { label: "8", cmd: "8" },
+            { label: "9", cmd: "9" },
+            { label: "%", cmd: "%" },
+            { label: "(", cmd: "(" },
+            { label: ")", cmd: ")" },
+            { label: "[", cmd: "[" },
+            { label: "]", cmd: "]" },
+            { label: "+", cmd: "+" },
+            { label: "-", cmd: "-" },
+            { label: "*", cmd: "*" },
+            { label: "/", cmd: "/" },
+            { label: "√", cmd: "\\sqrt" },
+            { label: "ⁿ√", cmd: "\\nthroot" },
+            { label: "π", cmd: "\\pi" },
+            { label: "θ", cmd: "\\theta" },
+            { label: "∑", cmd: "\\sum" },
+            { label: "∫", cmd: "\\int" },
+            { label: "a/b", cmd: "\\frac" },
+            { label: "∞", cmd: "\\infty" },
+            { label: "Δ", cmd: "\\Delta" },
+            { label: "x₁", cmd: "x_1" },
+            { label: "y₂", cmd: "y_2" },
+            { label: "H₈", cmd: "H_8" },
+            { label: "DΔ", cmd: "D\\Delta" },
+          ].map((button, index) => (
+            <button
+              key={index}
+              onClick={() => insertToMathField(button.cmd)}
+              className="btn"
+            >
+              {button.label}
+            </button>
+          ))}
+        </div>
 
         {customVariables?.length > 0 && (
           <div className="variables">
