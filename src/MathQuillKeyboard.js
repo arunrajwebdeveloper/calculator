@@ -83,16 +83,22 @@ const MathQuillKeyboard = () => {
             <button
               key={`operationKeys-${index}`}
               onClick={() => insertToMathField(button.cmd)}
-              className="key-btn"
+              className={`key-btn ${
+                button?.type === "digit"
+                  ? "digit"
+                  : button?.type === "operation"
+                  ? "operation"
+                  : ""
+              }`}
             >
               {button.label}
             </button>
           ))}
 
-          <button onClick={clearScreen} className="key-btn">
+          <button onClick={clearScreen} className="key-btn other-operation">
             AC
           </button>
-          <button onClick={backspace} className="key-btn">
+          <button onClick={backspace} className="key-btn other-operation">
             <svg viewBox="0 0 24 24" height="18" width="18">
               <path
                 fill="#000"
@@ -100,7 +106,7 @@ const MathQuillKeyboard = () => {
               ></path>
             </svg>
           </button>
-          <button onClick={processInput} className="key-btn">
+          <button onClick={processInput} className="key-btn other-operation">
             =
           </button>
         </div>

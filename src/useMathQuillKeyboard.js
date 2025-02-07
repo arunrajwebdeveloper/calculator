@@ -41,29 +41,29 @@ export const useMathQuillKeyboard = () => {
   ]);
 
   const operationKeys = [
-    { label: "0", cmd: "0" },
-    { label: "1", cmd: "1" },
-    { label: "2", cmd: "2" },
-    { label: "3", cmd: "3" },
-    { label: "4", cmd: "4" },
-    { label: "5", cmd: "5" },
-    { label: "6", cmd: "6" },
-    { label: "7", cmd: "7" },
-    { label: "8", cmd: "8" },
-    { label: "9", cmd: "9" },
-    { label: "%", cmd: "%" },
-    { label: "(", cmd: "(" },
-    { label: ")", cmd: ")" },
-    { label: "[", cmd: "[" },
-    { label: "]", cmd: "]" },
-    { label: "+", cmd: "+" },
-    { label: "-", cmd: "-" },
-    { label: "*", cmd: "*" },
-    { label: "÷", cmd: "÷" },
-    { label: "/", cmd: "/" },
-    { label: "a/b", cmd: "\\frac" },
-    { label: "√", cmd: "\\sqrt" },
-    { label: "ⁿ√", cmd: "\\nthroot" },
+    { label: "0", cmd: "0", type: "digit" },
+    { label: "1", cmd: "1", type: "digit" },
+    { label: "2", cmd: "2", type: "digit" },
+    { label: "3", cmd: "3", type: "digit" },
+    { label: "4", cmd: "4", type: "digit" },
+    { label: "5", cmd: "5", type: "digit" },
+    { label: "6", cmd: "6", type: "digit" },
+    { label: "7", cmd: "7", type: "digit" },
+    { label: "8", cmd: "8", type: "digit" },
+    { label: "9", cmd: "9", type: "digit" },
+    { label: "%", cmd: "%", type: "operation" },
+    { label: "(", cmd: "(", type: "operation" },
+    { label: ")", cmd: ")", type: "operation" },
+    { label: "[", cmd: "[", type: "operation" },
+    { label: "]", cmd: "]", type: "operation" },
+    { label: "+", cmd: "+", type: "operation" },
+    { label: "-", cmd: "-", type: "operation" },
+    { label: "*", cmd: "*", type: "operation" },
+    { label: "÷", cmd: "÷", type: "operation" },
+    { label: "/", cmd: "/", type: "operation" },
+    { label: "a/b", cmd: "\\frac", type: "operation" },
+    { label: "√", cmd: "\\sqrt", type: "operation" },
+    { label: "ⁿ√", cmd: "\\nthroot", type: "operation" },
     // { label: "π", cmd: "\\pi" },
     // { label: "θ", cmd: "\\theta" },
     // { label: "∑", cmd: "\\sum" },
@@ -98,8 +98,6 @@ export const useMathQuillKeyboard = () => {
       mathFieldRef.current.focus();
     }
   };
-
-  console.log("expression :>> ", expression);
 
   const arrayToObject = (array) => {
     return array?.length > 0

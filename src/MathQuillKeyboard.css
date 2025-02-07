@@ -1,9 +1,10 @@
 .wrp {
-  width: 673px;
+  width: 683px;
   margin: 50px auto 0;
-  padding: 20px;
-  border: 1px solid #444;
+  padding: 25px;
+  border: 1px solid #cfcfcf;
   background-color: #fff;
+  border-radius: 5px;
 }
 
 .math-field-element .mq-editable-field,
@@ -12,7 +13,7 @@
   padding: 20px;
   text-align: right;
   width: 100%;
-  border: 1px solid #444 !important;
+  border: 1px solid #d7d7d7 !important;
   box-shadow: none !important;
   outline: 0 !important;
   background-color: #e8e9e1;
@@ -36,14 +37,28 @@
   width: 50px;
   cursor: pointer;
   font-size: 16px;
-  background-color: #fff;
+  background-color: #f2f7ff;
   color: #000;
-  border: 1px solid #ccc;
+  border: 1px solid #edeef3;
   border-radius: 4px;
 }
 .btn-keys .key-btn svg {
   height: 16px;
   vertical-align: middle;
+}
+
+.btn-keys .key-btn.operation {
+  /* border-color: #000; */
+  background-color: #fff;
+}
+
+.btn-keys .key-btn.digit {
+  background-color: #fff;
+}
+
+.btn-keys .key-btn.other-operation {
+  border-color: #f3dfbf;
+  background-color: #ffefd8;
 }
 
 .variable-list {
