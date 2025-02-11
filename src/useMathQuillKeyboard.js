@@ -9,6 +9,8 @@ export const useMathQuillKeyboard = () => {
   const [result, setResult] = useImmer(null);
   const [scope, setScope] = useImmer([]);
 
+  console.log("expression :>> ", expression);
+
   const [definedVariables, setDefinedVariables] = useImmer([
     { label: "Kₖ", cmd: "10" },
     { label: "D₁", cmd: "20" },
@@ -60,7 +62,7 @@ export const useMathQuillKeyboard = () => {
     { label: "-", cmd: "-", type: "operation" },
     { label: "*", cmd: "*", type: "operation" },
     { label: "÷", cmd: "÷", type: "operation" },
-    { label: "/", cmd: "/", type: "operation" },
+    // { label: "/", cmd: "/", type: "operation" },
     { label: "a/b", cmd: "\\frac", type: "operation" },
     { label: "√", cmd: "\\sqrt", type: "operation" },
     { label: "ⁿ√", cmd: "\\nthroot", type: "operation" },
