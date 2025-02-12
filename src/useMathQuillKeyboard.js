@@ -262,6 +262,16 @@ export const useMathQuillKeyboard = () => {
     }
   };
 
+  const handleDefinedVariableValueChange = (key, value) => {
+    setDefinedVariables((draft) => {
+      const existingValue = draft?.find((ele) => ele?.label === key);
+
+      if (existingValue) {
+        existingValue.cmd = parseInt(value) || 0;
+      }
+    });
+  };
+
   return {
     definedVariables,
     operationKeys,
@@ -276,5 +286,7 @@ export const useMathQuillKeyboard = () => {
     processInput,
     mathQuillConfig,
     removeVariable,
+    handleDefinedVariableValueChange,
+    arrayToObject,
   };
 };
