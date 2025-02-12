@@ -267,7 +267,7 @@ export const useMathQuillKeyboard = () => {
       const existingValue = draft?.find((ele) => ele?.label === key);
 
       if (existingValue) {
-        existingValue.cmd = parseInt(value) || 0;
+        existingValue.cmd = value ?? 0;
       }
     });
   };
