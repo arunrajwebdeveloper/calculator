@@ -116,12 +116,17 @@ export const useMathQuillKeyboard = () => {
     // SPECIAL CHARACTERS
     // const regex = /[a-zA-Z][\u2080-\u2089\u2090-\u209C]/g;
     const regex = /[a-zA-Z][₀-₉ₐ-ₜ]/g;
+
     const matches = mathjs.match(regex);
 
+    console.log("matches :>> ", matches);
+
     if (matches?.length > 0) {
-      matches.forEach((char) => {
+      matches?.forEach((char) => {
         const character = definedVariables?.find((ele) => ele?.label === char);
-        mathjs = mathjs.replace(char, character?.cmd);
+        if (character) {
+          mathjs = mathjs.replace(char, character?.cmd);
+        }
       });
     }
 
@@ -209,6 +214,8 @@ export const useMathQuillKeyboard = () => {
       };
 
       const parsedExpression = latexToMathjs(expression);
+
+      console.log("parsedExpression :>> ", parsedExpression);
 
       if (parsedExpression.includes("=")) {
         const [varName, cmd] = parsedExpression.split("=");
