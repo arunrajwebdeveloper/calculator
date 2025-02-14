@@ -1,9 +1,9 @@
-import { evaluate, parse } from "mathjs";
-// import nerdamer from "nerdamer";
+// import { evaluate, parse } from "mathjs";
+import nerdamer from "nerdamer";
 import { useEffect, useRef } from "react";
 import { useImmer } from "use-immer";
 
-const initExpression = "\\frac{D+\\frac{r\\left(E-D\\right)}{Kₖ}}{Kₖ}";
+const initExpression = "\\frac{D+\\frac{r\\left(Z-D\\right)}{Kₖ}}{Kₖ}";
 
 export const useMathQuillKeyboard = () => {
   const mathFieldRef = useRef(null);
@@ -18,6 +18,7 @@ export const useMathQuillKeyboard = () => {
     { label: "D", cmd: "18" },
     { label: "Kₖ", cmd: "0.15" },
     { label: "r", cmd: "0.25" },
+    { label: "Z", cmd: "60" },
     { label: "E", cmd: "60" },
     { label: "D₁", cmd: "20" },
     { label: "Tₓ", cmd: "20" },
@@ -284,8 +285,8 @@ export const useMathQuillKeyboard = () => {
         if (varName && cmd) {
           //Check is existing definedVariables
           const existingItem = findExistingVar(varName);
-          const newCmd = evaluate(cmd.trim(), allScope);
-          // const newCmd = nerdamer(cmd.trim(), allScope).evaluate().text();
+          // const newCmd = evaluate(cmd.trim(), allScope);
+          const newCmd = nerdamer(cmd.trim(), allScope).evaluate().text();
 
           // const newCmd = parse(cmd.trim(), { implicit: "hide" })
           //   .compile()
@@ -328,10 +329,10 @@ export const useMathQuillKeyboard = () => {
           setExpression("");
         }
       } else {
-        const evaluated = evaluate(parsedExpression, allScope);
-        // const evaluated = nerdamer(parsedExpression, allScope)
-        //   .evaluate()
-        //   .text();
+        // const evaluated = evaluate(parsedExpression, allScope);
+        const evaluated = nerdamer(parsedExpression, allScope)
+          .evaluate()
+          .text();
 
         // const evaluated = parse(parsedExpression, {
         //   implicit: "hide",
