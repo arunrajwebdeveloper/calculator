@@ -34,9 +34,9 @@ const MathQuillKeyboard = () => {
               config={mathQuillConfig}
               latex={expression}
               onChange={(mathField) => setExpression(mathField.latex())}
-              mathquillDidMount={(mathField) =>
-                (mathFieldRef.current = mathField)
-              }
+              mathquillDidMount={(mathField) => {
+                mathFieldRef.current = mathField;
+              }}
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
                   processInput();

@@ -66,6 +66,7 @@ export const useMathQuillKeyboard = () => {
     { label: "a/b", cmd: "\\frac", type: "operation" },
     { label: "√", cmd: "\\sqrt", type: "operation" },
     { label: "ⁿ√", cmd: "\\nthroot", type: "operation" },
+    { label: "X\u207F", cmd: "^", type: "operation" },
     // { label: "π", cmd: "\\pi" },
     // { label: "θ", cmd: "\\theta" },
     // { label: "∑", cmd: "\\sum" },
@@ -118,8 +119,6 @@ export const useMathQuillKeyboard = () => {
     const regex = /[a-zA-Z][₀-₉ₐ-ₜ]/g;
 
     const matches = mathjs.match(regex);
-
-    console.log("matches :>> ", matches);
 
     if (matches?.length > 0) {
       matches?.forEach((char) => {
