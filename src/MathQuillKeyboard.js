@@ -44,7 +44,10 @@ const MathQuillKeyboard = () => {
               }}
             />
           </div>
-          <div className="result-span">{result ?? 0}</div>
+          <div className="result-span">
+            {/* <span>P=</span> */}
+            <span>{result ?? 0}</span>
+          </div>
 
           {/* VARIABLES */}
           {scope?.length > 0 && (

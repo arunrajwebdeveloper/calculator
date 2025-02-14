@@ -24,6 +24,10 @@
   border-top-color: #ccc !important;
   position: relative;
   z-index: 2;
+  /* 
+  display: flex;
+  justify-content: space-between;
+  align-items: center; */
 }
 .btn-keys {
   display: flex;

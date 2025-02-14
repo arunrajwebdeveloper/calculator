@@ -1,26 +1,29 @@
-// import { evaluate } from "mathjs";
-import nerdamer from "nerdamer";
+import { evaluate, parse } from "mathjs";
+// import nerdamer from "nerdamer";
 import { useEffect, useRef } from "react";
 import { useImmer } from "use-immer";
+
+const initExpression = "\\frac{D+\\frac{r\\left(E-D\\right)}{Kₖ}}{Kₖ}";
 
 export const useMathQuillKeyboard = () => {
   const mathFieldRef = useRef(null);
 
-  const [expression, setExpression] = useImmer("");
+  const [expression, setExpression] = useImmer(initExpression);
   const [result, setResult] = useImmer(null);
   const [scope, setScope] = useImmer([]);
 
   console.log("expression :>> ", expression);
 
   const [definedVariables, setDefinedVariables] = useImmer([
-    { label: "Kₖ", cmd: "10" },
+    { label: "D", cmd: "18" },
+    { label: "Kₖ", cmd: "0.15" },
+    { label: "r", cmd: "0.25" },
+    { label: "E", cmd: "60" },
     { label: "D₁", cmd: "20" },
     { label: "Tₓ", cmd: "20" },
     { label: "x₇", cmd: "20" },
     { label: "H₈", cmd: "20" },
     { label: "L₉", cmd: "20" },
-    { label: "E", cmd: "30" },
-    { label: "r", cmd: "40" },
     { label: "P₁", cmd: "50" },
     { label: "P₀", cmd: "60" },
     { label: "i", cmd: "10" },
@@ -188,6 +191,11 @@ export const useMathQuillKeyboard = () => {
       mathjs = mathjs.replace(/\\frac{([^{}]+)}{([^{}]+)}/g, "($1)/($2)");
     }
 
+    // mathjs = mathjs
+    //   .replace(/(\d)([a-zA-Z(])/g, "$1*$2") // 2x → 2*x, 3(4) → 3*(4)
+    //   .replace(/([a-zA-Z])(\d)/g, "$1*$2") // x2 → x*2
+    //   .replace(/([a-zA-Z])\(/g, "$1*("); // a(a+b) → a*(a+b)
+
     // Roots
     mathjs = mathjs.replace(/\\sqrt{([^{}]+)}/g, "sqrt($1)");
     mathjs = mathjs.replace(/\\sqrt\[([^{}]+)\]{([^{}]+)}/g, "($2)^(1/($1))"); // nthRoot as exponentiation
@@ -276,11 +284,15 @@ export const useMathQuillKeyboard = () => {
         if (varName && cmd) {
           //Check is existing definedVariables
           const existingItem = findExistingVar(varName);
-          // const newCmd = evaluate(cmd.trim(), allScope);
-          const newCmd = nerdamer(cmd.trim(), allScope).evaluate();
+          const newCmd = evaluate(cmd.trim(), allScope);
+          // const newCmd = nerdamer(cmd.trim(), allScope).evaluate().text();
+
+          // const newCmd = parse(cmd.trim(), { implicit: "hide" })
+          //   .compile()
+          //   .evaluate(allScope);
 
           if (!!existingItem) {
-            if (parseInt(existingItem?.cmd) === parseInt(newCmd.text())) {
+            if (parseInt(existingItem?.cmd) === parseInt(newCmd)) {
               const text = `No change in value.`;
               if (window.confirm(text) == true) {
                 return clearScreen();
@@ -316,10 +328,18 @@ export const useMathQuillKeyboard = () => {
           setExpression("");
         }
       } else {
-        // const evaluated = evaluate(parsedExpression, allScope);
-        const evaluated = nerdamer(parsedExpression, allScope).evaluate();
+        const evaluated = evaluate(parsedExpression, allScope);
+        // const evaluated = nerdamer(parsedExpression, allScope)
+        //   .evaluate()
+        //   .text();
 
-        setResult(evaluated.text());
+        // const evaluated = parse(parsedExpression, {
+        //   implicit: "hide",
+        // })
+        //   .compile()
+        //   .evaluate(allScope);
+
+        setResult(evaluated);
       }
     } catch (error) {
       setResult("Error: Invalid expression");
