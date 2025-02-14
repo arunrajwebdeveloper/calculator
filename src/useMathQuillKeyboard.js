@@ -1,4 +1,5 @@
-import { evaluate } from "mathjs";
+// import { evaluate } from "mathjs";
+import nerdamer from "nerdamer";
 import { useEffect, useRef } from "react";
 import { useImmer } from "use-immer";
 
@@ -129,6 +130,59 @@ export const useMathQuillKeyboard = () => {
       });
     }
 
+    // // Fractions (handling nested fractions)
+    // while (/\\frac{([^{}]+)}{([^{}]+)}/.test(mathjs)) {
+    //   mathjs = mathjs.replace(/\\frac{([^{}]+)}{([^{}]+)}/g, "($1)/($2)");
+    // }
+
+    // // Roots
+    // mathjs = mathjs.replace(/\\sqrt{([^{}]+)}/g, "sqrt($1)");
+    // mathjs = mathjs.replace(/\\sqrt\[([^{}]+)\]{([^{}]+)}/g, "nthRoot($2, $1)");
+
+    // // Constants
+    // mathjs = mathjs.replace(/\\pi/g, "PI");
+    // mathjs = mathjs.replace(/e/g, "e");
+
+    // // Operators
+    // mathjs = mathjs.replace(/\\cdot/g, "*");
+    // mathjs = mathjs.replace(/\\times/g, "*");
+    // mathjs = mathjs.replace(/\\div/g, "/");
+
+    // // Parentheses
+    // mathjs = mathjs.replace(/\\left\(/g, "(").replace(/\\right\)/g, ")");
+    // mathjs = mathjs.replace(/\\left\[/g, "[").replace(/\\right\]/g, "]");
+
+    // // Summation and Product
+    // mathjs = mathjs.replace(/\\sum_{([^{}]+)}\^([^{}]+) ([^ ]+)/g, "sum($3)");
+    // mathjs = mathjs.replace(/\\prod_{([^{}]+)}\^([^{}]+) ([^ ]+)/g, "prod($3)");
+
+    // // Absolute value
+    // mathjs = mathjs.replace(/\\left\|([^|]+)\\right\|/g, "abs($1)");
+
+    // // Statistical functions
+    // mathjs = mathjs.replace(/\\text{mean}\(([^)]+)\)/g, "mean($1)");
+    // mathjs = mathjs.replace(/\\text{median}\(([^)]+)\)/g, "median($1)");
+    // mathjs = mathjs.replace(/\\text{variance}\(([^)]+)\)/g, "var($1)");
+    // mathjs = mathjs.replace(/\\text{stdev}\(([^)]+)\)/g, "std($1)");
+    // mathjs = mathjs.replace(/\\text{cov}\(([^,]+), ([^)]+)\)/g, "cov($1, $2)");
+    // mathjs = mathjs.replace(/\\text{cor}\(([^,]+), ([^)]+)\)/g, "corr($1, $2)");
+
+    // // Percentage
+    // mathjs = mathjs.replace(/([a-zA-Z0-9]+)\\%$/, "($1/100)");
+    // mathjs = mathjs.replace(/([a-zA-Z0-9]+)\\%([a-zA-Z0-9]+)/g, "($1%$2)");
+
+    // // Modulo
+    // mathjs = mathjs.replace(
+    //   /\\text{mod}\{([^{}]+)\}\{([^{}]+)\}/g,
+    //   "mod($1, $2)"
+    // );
+
+    // **********************************************************
+    // **********************************************************
+    // **********************************************************
+
+    // For Nerdamer
+
     // Fractions (handling nested fractions)
     while (/\\frac{([^{}]+)}{([^{}]+)}/.test(mathjs)) {
       mathjs = mathjs.replace(/\\frac{([^{}]+)}{([^{}]+)}/g, "($1)/($2)");
@@ -136,11 +190,10 @@ export const useMathQuillKeyboard = () => {
 
     // Roots
     mathjs = mathjs.replace(/\\sqrt{([^{}]+)}/g, "sqrt($1)");
-    mathjs = mathjs.replace(/\\sqrt\[([^{}]+)\]{([^{}]+)}/g, "nthRoot($2, $1)");
+    mathjs = mathjs.replace(/\\sqrt\[([^{}]+)\]{([^{}]+)}/g, "($2)^(1/($1))"); // nthRoot as exponentiation
 
     // Constants
-    mathjs = mathjs.replace(/\\pi/g, "PI");
-    mathjs = mathjs.replace(/e/g, "e");
+    mathjs = mathjs.replace(/\\pi/g, "pi");
 
     // Operators
     mathjs = mathjs.replace(/\\cdot/g, "*");
@@ -153,7 +206,10 @@ export const useMathQuillKeyboard = () => {
 
     // Summation and Product
     mathjs = mathjs.replace(/\\sum_{([^{}]+)}\^([^{}]+) ([^ ]+)/g, "sum($3)");
-    mathjs = mathjs.replace(/\\prod_{([^{}]+)}\^([^{}]+) ([^ ]+)/g, "prod($3)");
+    mathjs = mathjs.replace(
+      /\\prod_{([^{}]+)}\^([^{}]+) ([^ ]+)/g,
+      "product($3)"
+    );
 
     // Absolute value
     mathjs = mathjs.replace(/\\left\|([^|]+)\\right\|/g, "abs($1)");
@@ -161,14 +217,13 @@ export const useMathQuillKeyboard = () => {
     // Statistical functions
     mathjs = mathjs.replace(/\\text{mean}\(([^)]+)\)/g, "mean($1)");
     mathjs = mathjs.replace(/\\text{median}\(([^)]+)\)/g, "median($1)");
-    mathjs = mathjs.replace(/\\text{variance}\(([^)]+)\)/g, "var($1)");
+    mathjs = mathjs.replace(/\\text{variance}\(([^)]+)\)/g, "variance($1)");
     mathjs = mathjs.replace(/\\text{stdev}\(([^)]+)\)/g, "std($1)");
     mathjs = mathjs.replace(/\\text{cov}\(([^,]+), ([^)]+)\)/g, "cov($1, $2)");
     mathjs = mathjs.replace(/\\text{cor}\(([^,]+), ([^)]+)\)/g, "corr($1, $2)");
 
     // Percentage
-    mathjs = mathjs.replace(/([a-zA-Z0-9]+)\\%$/, "($1/100)");
-    mathjs = mathjs.replace(/([a-zA-Z0-9]+)\\%([a-zA-Z0-9]+)/g, "($1%$2)");
+    mathjs = mathjs.replace(/([a-zA-Z0-9]+)\\%/g, "($1/100)");
 
     // Modulo
     mathjs = mathjs.replace(
@@ -221,10 +276,11 @@ export const useMathQuillKeyboard = () => {
         if (varName && cmd) {
           //Check is existing definedVariables
           const existingItem = findExistingVar(varName);
-          const newCmd = evaluate(cmd.trim(), allScope);
+          // const newCmd = evaluate(cmd.trim(), allScope);
+          const newCmd = nerdamer(cmd.trim(), allScope).evaluate();
 
           if (!!existingItem) {
-            if (parseInt(existingItem?.cmd) === parseInt(newCmd)) {
+            if (parseInt(existingItem?.cmd) === parseInt(newCmd.text())) {
               const text = `No change in value.`;
               if (window.confirm(text) == true) {
                 return clearScreen();
@@ -260,8 +316,10 @@ export const useMathQuillKeyboard = () => {
           setExpression("");
         }
       } else {
-        const evaluated = evaluate(parsedExpression, allScope);
-        setResult(evaluated);
+        // const evaluated = evaluate(parsedExpression, allScope);
+        const evaluated = nerdamer(parsedExpression, allScope).evaluate();
+
+        setResult(evaluated.text());
       }
     } catch (error) {
       setResult("Error: Invalid expression");
