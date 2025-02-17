@@ -4,6 +4,7 @@
   background-color: #fff;
   border-radius: 5px;
   padding: 25px;
+  user-select: none;
 }
 
 .math-field-element .mq-editable-field,
