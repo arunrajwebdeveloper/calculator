@@ -20,35 +20,36 @@ export const useMathQuillKeyboard = () => {
 
   const [definedVariables, setDefinedVariables] = useImmer([
     { label: "D", cmd: "18" },
-    { label: "Kₖ", cmd: "0.15" },
     { label: "r", cmd: "0.25" },
-    { label: "Z", cmd: "60" },
     { label: "E", cmd: "60" },
-    { label: "D₁", cmd: "20" },
-    { label: "Tₓ", cmd: "20" },
-    { label: "x₇", cmd: "20" },
-    { label: "H₈", cmd: "20" },
-    { label: "L₉", cmd: "20" },
-    { label: "P₁", cmd: "50" },
-    { label: "P₀", cmd: "60" },
-    { label: "i", cmd: "10" },
-    { label: "V₁", cmd: "70" },
-    { label: "n", cmd: "20" },
-    { label: "An", cmd: "20" },
-    { label: "b", cmd: "30" },
-    { label: "br", cmd: "60" },
+    { label: "Kₑ", cmd: "0.15" },
+    { label: "D₀", cmd: "2" },
+    { label: "g", cmd: "0.002" },
+    { label: "P₀", cmd: "120" },
+    { label: "D₁", cmd: "6.4" },
+    { label: "n", cmd: "10000" },
     {
-      label: "DΔ",
-      cmd: "100",
+      label: "Δn",
+      cmd: "5882",
     },
-    {
-      label: "PΔ",
-      cmd: "40",
-    },
-    {
-      label: "ΔH",
-      cmd: "80",
-    },
+    { label: "P₁", cmd: "102" },
+    { label: "I", cmd: "1000000" },
+
+    // { label: "L₉", cmd: "20" },
+    // { label: "P₀", cmd: "60" },
+    // { label: "i", cmd: "10" },
+    // { label: "V₁", cmd: "70" },
+    // { label: "An", cmd: "20" },
+    // { label: "b", cmd: "30" },
+    // { label: "br", cmd: "60" },
+    // {
+    //   label: "DΔ",
+    //   cmd: "100",
+    // },
+    // {
+    //   label: "PΔ",
+    //   cmd: "40",
+    // },
   ]);
 
   const operationKeys = [
@@ -69,7 +70,7 @@ export const useMathQuillKeyboard = () => {
     { label: "]", cmd: "]", type: "operation" },
     { label: "+", cmd: "+", type: "operation" },
     { label: "-", cmd: "-", type: "operation" },
-    { label: "*", cmd: "*", type: "operation" },
+    { label: "*", cmd: "\\cdot", type: "operation" },
     { label: "÷", cmd: "÷", type: "operation" },
     // { label: "/", cmd: "/", type: "operation" },
     { label: "a/b", cmd: "\\frac", type: "operation" },
@@ -118,6 +119,7 @@ export const useMathQuillKeyboard = () => {
 
   const insertToMathField = (latex) => {
     if (mathFieldRef.current) {
+      latex = latex?.replace(/\\cdot/g, "\\times");
       mathFieldRef.current.cmd(latex);
       mathFieldRef.current.focus();
     }
@@ -150,56 +152,7 @@ export const useMathQuillKeyboard = () => {
       });
     }
 
-    // // Fractions (handling nested fractions)
-    // while (/\\frac{([^{}]+)}{([^{}]+)}/.test(mathjs)) {
-    //   mathjs = mathjs.replace(/\\frac{([^{}]+)}{([^{}]+)}/g, "($1)/($2)");
-    // }
-
-    // // Roots
-    // mathjs = mathjs.replace(/\\sqrt{([^{}]+)}/g, "sqrt($1)");
-    // mathjs = mathjs.replace(/\\sqrt\[([^{}]+)\]{([^{}]+)}/g, "nthRoot($2, $1)");
-
-    // // Constants
-    // mathjs = mathjs.replace(/\\pi/g, "PI");
-    // mathjs = mathjs.replace(/e/g, "e");
-
-    // // Operators
-    // mathjs = mathjs.replace(/\\cdot/g, "*");
-    // mathjs = mathjs.replace(/\\times/g, "*");
-    // mathjs = mathjs.replace(/\\div/g, "/");
-
-    // // Parentheses
-    // mathjs = mathjs.replace(/\\left\(/g, "(").replace(/\\right\)/g, ")");
-    // mathjs = mathjs.replace(/\\left\[/g, "[").replace(/\\right\]/g, "]");
-
-    // // Summation and Product
-    // mathjs = mathjs.replace(/\\sum_{([^{}]+)}\^([^{}]+) ([^ ]+)/g, "sum($3)");
-    // mathjs = mathjs.replace(/\\prod_{([^{}]+)}\^([^{}]+) ([^ ]+)/g, "prod($3)");
-
-    // // Absolute value
-    // mathjs = mathjs.replace(/\\left\|([^|]+)\\right\|/g, "abs($1)");
-
-    // // Statistical functions
-    // mathjs = mathjs.replace(/\\text{mean}\(([^)]+)\)/g, "mean($1)");
-    // mathjs = mathjs.replace(/\\text{median}\(([^)]+)\)/g, "median($1)");
-    // mathjs = mathjs.replace(/\\text{variance}\(([^)]+)\)/g, "var($1)");
-    // mathjs = mathjs.replace(/\\text{stdev}\(([^)]+)\)/g, "std($1)");
-    // mathjs = mathjs.replace(/\\text{cov}\(([^,]+), ([^)]+)\)/g, "cov($1, $2)");
-    // mathjs = mathjs.replace(/\\text{cor}\(([^,]+), ([^)]+)\)/g, "corr($1, $2)");
-
-    // // Percentage
-    // mathjs = mathjs.replace(/([a-zA-Z0-9]+)\\%$/, "($1/100)");
-    // mathjs = mathjs.replace(/([a-zA-Z0-9]+)\\%([a-zA-Z0-9]+)/g, "($1%$2)");
-
-    // // Modulo
-    // mathjs = mathjs.replace(
-    //   /\\text{mod}\{([^{}]+)\}\{([^{}]+)\}/g,
-    //   "mod($1, $2)"
-    // );
-
-    // **********************************************************
-    // **********************************************************
-    // **********************************************************
+    // Fractions (handling nested fractions)
 
     // For Nerdamer
 
@@ -288,8 +241,6 @@ export const useMathQuillKeyboard = () => {
       };
 
       const parsedExpression = latexToMathjs(expression);
-
-      console.log("parsedExpression :>> ", parsedExpression);
 
       if (parsedExpression.includes("=")) {
         const [varName, cmd] = parsedExpression.split("=");

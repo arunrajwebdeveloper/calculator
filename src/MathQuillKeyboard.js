@@ -33,7 +33,11 @@ const MathQuillKeyboard = () => {
             <EditableMathField
               config={mathQuillConfig}
               latex={expression}
-              onChange={(mathField) => setExpression(mathField.latex())}
+              onChange={(mathField) => {
+                let exp = mathField.latex();
+                exp = exp?.replace(/\\cdot/g, "\\times");
+                setExpression(exp);
+              }}
               mathquillDidMount={(mathField) => {
                 mathFieldRef.current = mathField;
               }}
