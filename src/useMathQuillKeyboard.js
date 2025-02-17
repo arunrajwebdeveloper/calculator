@@ -3,7 +3,7 @@ import nerdamer from "nerdamer";
 import { useEffect, useRef } from "react";
 import { useImmer } from "use-immer";
 
-// const initExpression = "\\frac{D+\\frac{r\\left(Z-D\\right)}{Kₖ}}{Kₖ}";
+// const initExpression = "\\frac{D+\\frac{r\\left(E-D\\right)}{Kₖ}}{Kₖ}";
 const initExpression = "";
 
 export const useMathQuillKeyboard = () => {
