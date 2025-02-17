@@ -8,6 +8,9 @@ const initExpression = "\\frac{D+\\frac{r\\left(Z-D\\right)}{Kₖ}}{Kₖ}";
 export const useMathQuillKeyboard = () => {
   const mathFieldRef = useRef(null);
 
+  // First, save the original E value from Nerdamer
+  // const originalE = nerdamer("e").evaluate();
+
   const [expression, setExpression] = useImmer(initExpression);
   const [result, setResult] = useImmer(null);
   const [scope, setScope] = useImmer([]);
@@ -79,6 +82,18 @@ export const useMathQuillKeyboard = () => {
     // { label: "∞", cmd: "\\infty" },
     // { label: "Δ", cmd: "\\Delta" },
   ];
+
+  // Temporarily modify Nerdamer's core constants
+  const assignVariables = (array = [], key = "") => {
+    const existingKey = array?.find((item) => item?.label === key);
+    if (existingKey) {
+      return existingKey?.cmd;
+    }
+    return 0;
+  };
+
+  nerdamer.setConstant("E", assignVariables(definedVariables, "E"));
+  nerdamer.setConstant("e", assignVariables(definedVariables, "e"));
 
   const mathQuillConfig = {
     restrictMismatchedBrackets: true, // Ensures brackets are always matched
@@ -191,11 +206,6 @@ export const useMathQuillKeyboard = () => {
     while (/\\frac{([^{}]+)}{([^{}]+)}/.test(mathjs)) {
       mathjs = mathjs.replace(/\\frac{([^{}]+)}{([^{}]+)}/g, "($1)/($2)");
     }
-
-    // mathjs = mathjs
-    //   .replace(/(\d)([a-zA-Z(])/g, "$1*$2") // 2x → 2*x, 3(4) → 3*(4)
-    //   .replace(/([a-zA-Z])(\d)/g, "$1*$2") // x2 → x*2
-    //   .replace(/([a-zA-Z])\(/g, "$1*("); // a(a+b) → a*(a+b)
 
     // Roots
     mathjs = mathjs.replace(/\\sqrt{([^{}]+)}/g, "sqrt($1)");
@@ -356,6 +366,9 @@ export const useMathQuillKeyboard = () => {
       }
     });
   };
+
+  // Restore original E value
+  // nerdamer.setConstant("E", originalE);
 
   return {
     definedVariables,
