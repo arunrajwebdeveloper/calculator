@@ -123,10 +123,22 @@ export const useMathQuillKeyboard = () => {
     });
   };
 
+  // const insertToMathField = (latex) => {
+  //   if (mathFieldRef.current) {
+  //     latex = latex?.replace(/\\cdot/g, "\\times");
+  //     mathFieldRef.current.cmd(latex);
+  //     mathFieldRef.current.focus();
+  //   }
+  // };
+
   const insertToMathField = (latex) => {
     if (mathFieldRef.current) {
       latex = latex?.replace(/\\cdot/g, "\\times");
-      mathFieldRef.current.cmd(latex);
+      if (latex === "+" || latex === "-") {
+        mathFieldRef.current.write(latex);
+      } else {
+        mathFieldRef.current.cmd(latex);
+      }
       mathFieldRef.current.focus();
     }
   };
@@ -178,6 +190,19 @@ export const useMathQuillKeyboard = () => {
     mathjs = mathjs.replace(/\\cdot/g, "*");
     mathjs = mathjs.replace(/\\times/g, "*");
     mathjs = mathjs.replace(/\\div/g, "/");
+
+    // Ensure exponents `{}` are pre-evaluated before passing to Nerdamer
+    mathjs = mathjs.replace(
+      /(\d+|\w+)\^\{([^{}]+)\}/g,
+      (match, base, exponent) => {
+        try {
+          let evaluatedExponent = nerdamer(exponent).evaluate().text(); // Evaluate the exponent first
+          return `(${base}^(${evaluatedExponent}))`; // Nerdamer understands this format
+        } catch (error) {
+          return match; // If error, return the original match
+        }
+      }
+    );
 
     // Parentheses
     mathjs = mathjs.replace(/\\left\(/g, "(").replace(/\\right\)/g, ")");
