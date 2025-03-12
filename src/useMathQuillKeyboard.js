@@ -99,7 +99,13 @@ export const useMathQuillKeyboard = () => {
     // { label: "a/b", cmd: "\\frac", type: "operation" },
     { label: "√", cmd: "\\sqrt", type: "operation", icon: squareRoot },
     { label: "ⁿ√", cmd: "\\nthroot", type: "operation", icon: nthRoot },
-    { label: "X\u207F", cmd: "^", type: "operation", icon: power },
+    {
+      label: "X\u207F",
+      cmd: "^",
+      type: "operation",
+
+      // icon: power
+    },
     // { label: "π", cmd: "\\pi" },
     // { label: "θ", cmd: "\\theta" },
     // { label: "∑", cmd: "\\sum" },
