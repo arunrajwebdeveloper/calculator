@@ -3,6 +3,7 @@ import { addStyles, EditableMathField } from "react-mathquill";
 import "./MathQuillKeyboard.css";
 import { useMathQuillKeyboard } from "./useMathQuillKeyboard";
 import { Form } from "./Form";
+import { equal, clear } from "./images";
 
 addStyles();
 
@@ -103,7 +104,7 @@ const MathQuillKeyboard = () => {
                   onClick={() => insertToMathField(button.cmd)}
                   className="key-btn digit"
                 >
-                  {button.label === "." ? (
+                  {Object(button).hasOwnProperty("icon") ? (
                     <img src={button.icon} />
                   ) : (
                     button.label
@@ -120,7 +121,7 @@ const MathQuillKeyboard = () => {
                   onClick={() => insertToMathField(button.cmd)}
                   className="key-btn operation"
                 >
-                  {button.label === "%" ? (
+                  {Object(button).hasOwnProperty("icon") ? (
                     <img src={button.icon} />
                   ) : (
                     button.label
@@ -137,7 +138,11 @@ const MathQuillKeyboard = () => {
                   onClick={() => insertToMathField(button.cmd)}
                   className="key-btn basic-operation"
                 >
-                  <img src={button.icon} />
+                  {Object(button).hasOwnProperty("icon") ? (
+                    <img src={button.icon} />
+                  ) : (
+                    button.label
+                  )}
                 </button>
               ))}
             </div>
@@ -153,18 +158,13 @@ const MathQuillKeyboard = () => {
                 onClick={backspace}
                 className="key-btn other-operation clear"
               >
-                <svg viewBox="0 0 24 24" height="18" width="18">
-                  <path
-                    fill="#000"
-                    d="M22 3H7c-.69 0-1.23.35-1.59.88L0 12l5.41 8.11c.36.53.9.89 1.59.89h15c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-3 12.59L17.59 17 14 13.41 10.41 17 9 15.59 12.59 12 9 8.41 10.41 7 14 10.59 17.59 7 19 8.41 15.41 12 19 15.59z"
-                  ></path>
-                </svg>
+                <img style={{ width: 28, height: 28 }} src={clear} />
               </button>
               <button
                 onClick={processInput}
                 className="key-btn other-operation equal"
               >
-                =
+                <img src={equal} />
               </button>
             </div>
           </div>

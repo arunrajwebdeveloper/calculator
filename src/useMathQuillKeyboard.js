@@ -3,7 +3,22 @@ import nerdamer from "nerdamer";
 import { useEffect, useRef } from "react";
 import { useImmer } from "use-immer";
 import { limitResultLength, manageResultLength } from "./utils";
-import { plus, minus, multiply, divide, dot, percent } from "./images";
+import {
+  plus,
+  minus,
+  multiply,
+  divide,
+  dot,
+  percent,
+  squareLeft,
+  squareRight,
+  bracketRoundLeft,
+  bracketRoundRight,
+  slash,
+  squareRoot,
+  nthRoot,
+  power,
+} from "./images";
 
 const MAX_DIGITS = 16;
 
@@ -75,26 +90,16 @@ export const useMathQuillKeyboard = () => {
   ];
 
   const operationKeys = [
-    // { label: "0", cmd: "0", type: "digit" },
-    // { label: "1", cmd: "1", type: "digit" },
-    // { label: "2", cmd: "2", type: "digit" },
-    // { label: "3", cmd: "3", type: "digit" },
-    // { label: "4", cmd: "4", type: "digit" },
-    // { label: "5", cmd: "5", type: "digit" },
-    // { label: "6", cmd: "6", type: "digit" },
-    // { label: "7", cmd: "7", type: "digit" },
-    // { label: "8", cmd: "8", type: "digit" },
-    // { label: "9", cmd: "9", type: "digit" },
     { label: "%", cmd: "%", type: "operation", icon: percent },
-    { label: "(", cmd: "(", type: "operation" },
-    { label: ")", cmd: ")", type: "operation" },
-    { label: "[", cmd: "[", type: "operation" },
-    { label: "]", cmd: "]", type: "operation" },
-    { label: "/", cmd: "/", type: "operation" },
+    { label: "(", cmd: "(", type: "operation", icon: bracketRoundLeft },
+    { label: ")", cmd: ")", type: "operation", icon: bracketRoundRight },
+    { label: "[", cmd: "[", type: "operation", icon: squareLeft },
+    { label: "]", cmd: "]", type: "operation", icon: squareRight },
+    { label: "/", cmd: "/", type: "operation", icon: slash },
     // { label: "a/b", cmd: "\\frac", type: "operation" },
-    { label: "√", cmd: "\\sqrt", type: "operation" },
-    { label: "ⁿ√", cmd: "\\nthroot", type: "operation" },
-    { label: "X\u207F", cmd: "^", type: "operation" },
+    { label: "√", cmd: "\\sqrt", type: "operation", icon: squareRoot },
+    { label: "ⁿ√", cmd: "\\nthroot", type: "operation", icon: nthRoot },
+    { label: "X\u207F", cmd: "^", type: "operation", icon: power },
     // { label: "π", cmd: "\\pi" },
     // { label: "θ", cmd: "\\theta" },
     // { label: "∑", cmd: "\\sum" },
