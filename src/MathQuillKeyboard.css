@@ -30,6 +30,11 @@
   justify-content: space-between;
   align-items: center; */
 }
+
+.result-span span.invalid {
+  color: #e92121 !important;
+}
+
 .btn-keys {
   display: flex;
   flex-wrap: wrap;

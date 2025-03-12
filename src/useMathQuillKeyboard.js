@@ -2,9 +2,9 @@
 import nerdamer from "nerdamer";
 import { useEffect, useRef } from "react";
 import { useImmer } from "use-immer";
+import { limitResultLength, manageResultLength } from "./utils";
 
-// const initExpression = "\\frac{D+\\frac{r\\left(E-D\\right)}{Kₖ}}{Kₖ}";
-const initExpression = "";
+const MAX_DIGITS = 16;
 
 export const useMathQuillKeyboard = () => {
   const mathFieldRef = useRef(null);
@@ -12,9 +12,10 @@ export const useMathQuillKeyboard = () => {
   // First, save the original E value from Nerdamer
   // const originalE = nerdamer("e").evaluate();
 
-  const [expression, setExpression] = useImmer(initExpression);
+  const [expression, setExpression] = useImmer("");
   const [result, setResult] = useImmer(null);
   const [scope, setScope] = useImmer([]);
+  const [error, setError] = useImmer(false);
 
   console.log("expression :>> ", expression);
 
@@ -248,6 +249,10 @@ export const useMathQuillKeyboard = () => {
     }
   }, [expression]);
 
+  useEffect(() => {
+    setError(result === "Error: Invalid expression");
+  }, [result]);
+
   const clearScreen = () => {
     if (mathFieldRef.current) {
       mathFieldRef.current.latex(""); // Clears MathQuill input
@@ -322,17 +327,13 @@ export const useMathQuillKeyboard = () => {
           setExpression("");
         }
       } else {
-        // const evaluated = evaluate(parsedExpression, allScope);
-        const evaluated = nerdamer(parsedExpression, allScope)
-          .evaluate()
-          .text();
+        let evaluated = nerdamer(parsedExpression, allScope).evaluate().text();
 
-        // const evaluated = parse(parsedExpression, {
-        //   implicit: "hide",
-        // })
-        //   .compile()
-        //   .evaluate(allScope);
+        // Uses scientific notation for large/small values.
+        evaluated = manageResultLength(evaluated, MAX_DIGITS);
 
+        // Slice result length
+        // evaluated = limitResultLength(evaluated, MAX_DIGITS);
         setResult(evaluated);
       }
     } catch (error) {
@@ -369,5 +370,6 @@ export const useMathQuillKeyboard = () => {
     removeVariable,
     handleDefinedVariableValueChange,
     arrayToObject,
+    error,
   };
 };

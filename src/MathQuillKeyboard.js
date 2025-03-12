@@ -23,6 +23,7 @@ const MathQuillKeyboard = () => {
     removeVariable,
     handleDefinedVariableValueChange,
     arrayToObject,
+    error,
   } = useMathQuillKeyboard();
 
   return (
@@ -50,7 +51,7 @@ const MathQuillKeyboard = () => {
           </div>
           <div className="result-span">
             {/* <span>P=</span> */}
-            <span>{result ?? 0}</span>
+            <span className={`${error ? "invalid" : ""}`}>{result ?? 0}</span>
           </div>
 
           {/* VARIABLES */}
