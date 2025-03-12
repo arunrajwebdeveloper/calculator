@@ -87,6 +87,11 @@ button.key-btn.other-operation.ac {
   border-color: #ff8a8a;
   color: #fff;
 }
+button.key-btn img {
+  height: 20px;
+  width: 20px;
+  vertical-align: middle;
+}
 
 .variable-list {
   border: 1px solid #d7d7d7;

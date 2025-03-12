@@ -103,7 +103,11 @@ const MathQuillKeyboard = () => {
                   onClick={() => insertToMathField(button.cmd)}
                   className="key-btn digit"
                 >
-                  {button.label}
+                  {button.label === "." ? (
+                    <img src={button.icon} />
+                  ) : (
+                    button.label
+                  )}
                 </button>
               ))}
             </div>
@@ -114,15 +118,13 @@ const MathQuillKeyboard = () => {
                 <button
                   key={`operationKeys-${index}`}
                   onClick={() => insertToMathField(button.cmd)}
-                  className={`key-btn ${
-                    button?.type === "digit"
-                      ? "digit"
-                      : button?.type === "operation"
-                      ? "operation"
-                      : ""
-                  }`}
+                  className="key-btn operation"
                 >
-                  {button.label}
+                  {button.label === "%" ? (
+                    <img src={button.icon} />
+                  ) : (
+                    button.label
+                  )}
                 </button>
               ))}
             </div>
@@ -135,7 +137,7 @@ const MathQuillKeyboard = () => {
                   onClick={() => insertToMathField(button.cmd)}
                   className="key-btn basic-operation"
                 >
-                  {button.label}
+                  <img src={button.icon} />
                 </button>
               ))}
             </div>

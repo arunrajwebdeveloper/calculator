@@ -3,6 +3,7 @@ import nerdamer from "nerdamer";
 import { useEffect, useRef } from "react";
 import { useImmer } from "use-immer";
 import { limitResultLength, manageResultLength } from "./utils";
+import { plus, minus, multiply, divide, dot, percent } from "./images";
 
 const MAX_DIGITS = 16;
 
@@ -70,7 +71,7 @@ export const useMathQuillKeyboard = () => {
     { label: "8", cmd: "8", type: "digit" },
     { label: "9", cmd: "9", type: "digit" },
     { label: "0", cmd: "0", type: "digit" },
-    { label: ".", cmd: ".", type: "digit" },
+    { label: ".", cmd: ".", type: "digit", icon: dot },
   ];
 
   const operationKeys = [
@@ -84,7 +85,7 @@ export const useMathQuillKeyboard = () => {
     // { label: "7", cmd: "7", type: "digit" },
     // { label: "8", cmd: "8", type: "digit" },
     // { label: "9", cmd: "9", type: "digit" },
-    { label: "%", cmd: "%", type: "operation" },
+    { label: "%", cmd: "%", type: "operation", icon: percent },
     { label: "(", cmd: "(", type: "operation" },
     { label: ")", cmd: ")", type: "operation" },
     { label: "[", cmd: "[", type: "operation" },
@@ -103,10 +104,10 @@ export const useMathQuillKeyboard = () => {
   ];
 
   const basicOperation = [
-    { label: "+", cmd: "+", type: "operation" },
-    { label: "-", cmd: "-", type: "operation" },
-    { label: "*", cmd: "\\cdot", type: "operation" },
-    { label: "÷", cmd: "÷", type: "operation" },
+    { label: "÷", cmd: "÷", type: "operation", icon: divide },
+    { label: "*", cmd: "\\cdot", type: "operation", icon: multiply },
+    { label: "-", cmd: "-", type: "operation", icon: minus },
+    { label: "+", cmd: "+", type: "operation", icon: plus },
   ];
 
   // Temporarily modify Nerdamer's core constants
