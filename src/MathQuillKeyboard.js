@@ -10,6 +10,8 @@ const MathQuillKeyboard = () => {
   const {
     definedVariables,
     operationKeys,
+    basicOperation,
+    numbers,
     expression,
     result,
     mathFieldRef,
@@ -80,47 +82,89 @@ const MathQuillKeyboard = () => {
           <div className="btn-keys">
             {/* DEFINED VARIABLES */}
 
-            {definedVariables?.map((button, index) => (
-              <button
-                key={`definedVariables-${index}`}
-                onClick={() => insertToMathField(button.label)}
-                className="key-btn"
-              >
-                {button.label}
-              </button>
-            ))}
+            <div style={{ width: 160 }}>
+              {definedVariables?.map((button, index) => (
+                <button
+                  key={`definedVariables-${index}`}
+                  onClick={() => insertToMathField(button.label)}
+                  className="key-btn"
+                >
+                  {button.label}
+                </button>
+              ))}
+            </div>
+
+            {/* Numbers */}
+
+            <div style={{ width: 160 }}>
+              {numbers?.map((button, index) => (
+                <button
+                  key={`numberKeys-${index}`}
+                  onClick={() => insertToMathField(button.cmd)}
+                  className="key-btn digit"
+                >
+                  {button.label}
+                </button>
+              ))}
+            </div>
 
             {/* OPERATORS KEYS */}
-            {operationKeys?.map((button, index) => (
-              <button
-                key={`operationKeys-${index}`}
-                onClick={() => insertToMathField(button.cmd)}
-                className={`key-btn ${
-                  button?.type === "digit"
-                    ? "digit"
-                    : button?.type === "operation"
-                    ? "operation"
-                    : ""
-                }`}
-              >
-                {button.label}
-              </button>
-            ))}
+            <div style={{ width: 160 }}>
+              {operationKeys?.map((button, index) => (
+                <button
+                  key={`operationKeys-${index}`}
+                  onClick={() => insertToMathField(button.cmd)}
+                  className={`key-btn ${
+                    button?.type === "digit"
+                      ? "digit"
+                      : button?.type === "operation"
+                      ? "operation"
+                      : ""
+                  }`}
+                >
+                  {button.label}
+                </button>
+              ))}
+            </div>
 
-            <button onClick={clearScreen} className="key-btn other-operation">
-              AC
-            </button>
-            <button onClick={backspace} className="key-btn other-operation">
-              <svg viewBox="0 0 24 24" height="18" width="18">
-                <path
-                  fill="#000"
-                  d="M22 3H7c-.69 0-1.23.35-1.59.88L0 12l5.41 8.11c.36.53.9.89 1.59.89h15c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-3 12.59L17.59 17 14 13.41 10.41 17 9 15.59 12.59 12 9 8.41 10.41 7 14 10.59 17.59 7 19 8.41 15.41 12 19 15.59z"
-                ></path>
-              </svg>
-            </button>
-            <button onClick={processInput} className="key-btn other-operation">
-              =
-            </button>
+            {/* BASIC OPERATORS KEYS */}
+            <div style={{ width: 50 }}>
+              {basicOperation?.map((button, index) => (
+                <button
+                  key={`basic-operationKeys-${index}`}
+                  onClick={() => insertToMathField(button.cmd)}
+                  className="key-btn basic-operation"
+                >
+                  {button.label}
+                </button>
+              ))}
+            </div>
+
+            <div style={{ width: 50 }}>
+              <button
+                onClick={clearScreen}
+                className="key-btn other-operation ac"
+              >
+                AC
+              </button>
+              <button
+                onClick={backspace}
+                className="key-btn other-operation clear"
+              >
+                <svg viewBox="0 0 24 24" height="18" width="18">
+                  <path
+                    fill="#000"
+                    d="M22 3H7c-.69 0-1.23.35-1.59.88L0 12l5.41 8.11c.36.53.9.89 1.59.89h15c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-3 12.59L17.59 17 14 13.41 10.41 17 9 15.59 12.59 12 9 8.41 10.41 7 14 10.59 17.59 7 19 8.41 15.41 12 19 15.59z"
+                  ></path>
+                </svg>
+              </button>
+              <button
+                onClick={processInput}
+                className="key-btn other-operation equal"
+              >
+                =
+              </button>
+            </div>
           </div>
         </div>
 

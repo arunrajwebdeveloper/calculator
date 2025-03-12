@@ -59,8 +59,7 @@ export const useMathQuillKeyboard = () => {
     // },
   ]);
 
-  const operationKeys = [
-    { label: "0", cmd: "0", type: "digit" },
+  const numbers = [
     { label: "1", cmd: "1", type: "digit" },
     { label: "2", cmd: "2", type: "digit" },
     { label: "3", cmd: "3", type: "digit" },
@@ -70,17 +69,28 @@ export const useMathQuillKeyboard = () => {
     { label: "7", cmd: "7", type: "digit" },
     { label: "8", cmd: "8", type: "digit" },
     { label: "9", cmd: "9", type: "digit" },
+    { label: "0", cmd: "0", type: "digit" },
+    { label: ".", cmd: ".", type: "digit" },
+  ];
+
+  const operationKeys = [
+    // { label: "0", cmd: "0", type: "digit" },
+    // { label: "1", cmd: "1", type: "digit" },
+    // { label: "2", cmd: "2", type: "digit" },
+    // { label: "3", cmd: "3", type: "digit" },
+    // { label: "4", cmd: "4", type: "digit" },
+    // { label: "5", cmd: "5", type: "digit" },
+    // { label: "6", cmd: "6", type: "digit" },
+    // { label: "7", cmd: "7", type: "digit" },
+    // { label: "8", cmd: "8", type: "digit" },
+    // { label: "9", cmd: "9", type: "digit" },
     { label: "%", cmd: "%", type: "operation" },
     { label: "(", cmd: "(", type: "operation" },
     { label: ")", cmd: ")", type: "operation" },
     { label: "[", cmd: "[", type: "operation" },
     { label: "]", cmd: "]", type: "operation" },
-    { label: "+", cmd: "+", type: "operation" },
-    { label: "-", cmd: "-", type: "operation" },
-    { label: "*", cmd: "\\cdot", type: "operation" },
-    { label: "÷", cmd: "÷", type: "operation" },
     { label: "/", cmd: "/", type: "operation" },
-    { label: "a/b", cmd: "\\frac", type: "operation" },
+    // { label: "a/b", cmd: "\\frac", type: "operation" },
     { label: "√", cmd: "\\sqrt", type: "operation" },
     { label: "ⁿ√", cmd: "\\nthroot", type: "operation" },
     { label: "X\u207F", cmd: "^", type: "operation" },
@@ -90,6 +100,13 @@ export const useMathQuillKeyboard = () => {
     // { label: "∫", cmd: "\\int" },
     // { label: "∞", cmd: "\\infty" },
     // { label: "Δ", cmd: "\\Delta" },
+  ];
+
+  const basicOperation = [
+    { label: "+", cmd: "+", type: "operation" },
+    { label: "-", cmd: "-", type: "operation" },
+    { label: "*", cmd: "\\cdot", type: "operation" },
+    { label: "÷", cmd: "÷", type: "operation" },
   ];
 
   // Temporarily modify Nerdamer's core constants
@@ -357,6 +374,8 @@ export const useMathQuillKeyboard = () => {
   return {
     definedVariables,
     operationKeys,
+    basicOperation,
+    numbers,
     expression,
     result,
     mathFieldRef,

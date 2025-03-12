@@ -1,5 +1,5 @@
 .wrp {
-  width: 683px;
+  width: 665px;
   border: 1px solid #cfcfcf;
   background-color: #fff;
   border-radius: 5px;
@@ -16,7 +16,7 @@
   border: 1px solid #d7d7d7 !important;
   box-shadow: none !important;
   outline: 0 !important;
-  background-color: #e8e9e1;
+  background-color: #e3efde;
 }
 .result-span {
   padding: 8px 20px;
@@ -37,16 +37,26 @@
 
 .btn-keys {
   display: flex;
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
   gap: 8px;
-  padding-top: 10px;
+  padding-top: 16px;
+  justify-content: flex-start;
+  align-items: flex-start;
 }
+
+.btn-keys > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  flex: none;
+}
+
 .btn-keys .key-btn {
   height: 50px;
   width: 50px;
   cursor: pointer;
   font-size: 16px;
-  background-color: #f2f7ff;
+  background-color: #e0eaf9;
   color: #000;
   border: 1px solid #edeef3;
   border-radius: 4px;
@@ -58,16 +68,24 @@
 
 .btn-keys .key-btn.operation {
   /* border-color: #000; */
-  background-color: #fff;
+  background-color: #d3f7d0;
 }
-
 .btn-keys .key-btn.digit {
-  background-color: #fff;
+  background-color: #f3f1b4;
 }
 
+.btn-keys .key-btn.basic-operation,
 .btn-keys .key-btn.other-operation {
   border-color: #f3dfbf;
-  background-color: #ffefd8;
+  background-color: #ffdead;
+}
+button.key-btn.other-operation.equal {
+  height: 105px;
+}
+button.key-btn.other-operation.ac {
+  background-color: #ff6363;
+  border-color: #ff8a8a;
+  color: #fff;
 }
 
 .variable-list {
@@ -151,5 +169,5 @@
   max-width: 964px;
 }
 .values-lising {
-  width: 200px;
+  width: 170px;
 }
