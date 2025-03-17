@@ -248,17 +248,37 @@ export const useMathQuillKeyboard = () => {
     mathjs = mathjs.replace(/\\div/g, "/");
 
     // Ensure exponents `{}` are pre-evaluated before passing to Nerdamer
+    // mathjs = mathjs.replace(
+    //   /(\d+|\w+)\^\{([^{}]+)\}/g,
+    //   (match, base, exponent) => {
+    //     try {
+    //       let evaluatedExponent = nerdamer(exponent).evaluate().text(); // Evaluate the exponent first
+    //       return `(${base}^(${evaluatedExponent}))`; // Nerdamer understands this format
+    //     } catch (error) {
+    //       return match; // If error, return the original match
+    //     }
+    //   }
+    // );
+
+    // Convert exponents **before** passing to Nerdamer
     mathjs = mathjs.replace(
-      /(\d+|\w+)\^\{([^{}]+)\}/g,
+      /([a-zA-Z0-9()\s]+)\^\{([^{}]*)\}/g,
       (match, base, exponent) => {
         try {
-          let evaluatedExponent = nerdamer(exponent).evaluate().text(); // Evaluate the exponent first
-          return `(${base}^(${evaluatedExponent}))`; // Nerdamer understands this format
+          // Remove unnecessary \left and \right
+          let cleanedExponent = exponent.replace(/\\left|\\right/g, "");
+          // Evaluate exponent first
+          let evaluatedExponent = nerdamer(cleanedExponent).evaluate().text();
+          // Compute full exponentiation
+          return nerdamer(`${base}^(${evaluatedExponent})`).evaluate().text();
         } catch (error) {
-          return match; // If error, return the original match
+          return match;
         }
       }
     );
+
+    // Fix for negative exponentiation issues
+    mathjs = mathjs.replace(/-\((\d+\^\d+)\)/g, "-$1");
 
     // Parentheses
     mathjs = mathjs.replace(/\\left\(/g, "(").replace(/\\right\)/g, ")");
