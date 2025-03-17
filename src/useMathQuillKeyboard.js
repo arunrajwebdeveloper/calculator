@@ -326,7 +326,11 @@ export const useMathQuillKeyboard = () => {
       if (problematicOperators.includes(key)) {
         const cursorLatex = mathField.latex();
 
-        if (cursorLatex.includes("^") || cursorLatex.includes("\\frac")) {
+        if (
+          cursorLatex.includes("^") ||
+          cursorLatex.includes("\\frac") ||
+          cursorLatex.includes("\\left")
+        ) {
           event.preventDefault();
           mathField.write(key === "*" ? "\\times" : key);
           mathField.focus();
