@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/calculator/static/css/main.e8772d01.css",
-    "main.js": "/calculator/static/js/main.f04bd15e.js",
+    "main.js": "/calculator/static/js/main.79a3d960.js",
     "static/media/power.svg": "/calculator/static/media/power.cbcc007ca96f6d35c53e7597c7e5e741.svg",
     "static/media/clear.svg": "/calculator/static/media/clear.74f67a244e8255e77ec84a28e5a8a9b0.svg",
     "static/media/multiply.svg": "/calculator/static/media/multiply.43d8b4295f665c49df3141c64999590a.svg",
@@ -20,10 +20,10 @@
     "static/media/slash.svg": "/calculator/static/media/slash.6ae9f5459ea373350b95a5276c759e1e.svg",
     "static/media/dot.svg": "/calculator/static/media/dot.bce358501f0c882ebef86e4581b34d54.svg",
     "main.e8772d01.css.map": "/calculator/static/css/main.e8772d01.css.map",
-    "main.f04bd15e.js.map": "/calculator/static/js/main.f04bd15e.js.map"
+    "main.79a3d960.js.map": "/calculator/static/js/main.79a3d960.js.map"
   },
   "entrypoints": [
     "static/css/main.e8772d01.css",
-    "static/js/main.f04bd15e.js"
+    "static/js/main.79a3d960.js"
   ]
 }
