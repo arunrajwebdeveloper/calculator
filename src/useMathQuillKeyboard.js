@@ -153,6 +153,27 @@ export const useMathQuillKeyboard = () => {
     });
   };
 
+  // const isValidDecimalInput = (mathField, key) => {
+  //   if (key !== ".") return true; // Only check for "."
+
+  //   const cursorLatex = mathField.latex();
+
+  //   // Find the last complete number segment before the cursor
+  //   const match = cursorLatex.match(/(\d*\.?\d*)$/);
+  //   if (match && match[0].includes(".")) {
+  //     return false; // Block extra decimals
+  //   }
+
+  //   // Split by operators & brackets
+  //   const parts = cursorLatex.split(
+  //     /[\+\-\*\\div\\cdot\\times\\frac\%/\^\(\)\[\]\s]/
+  //   );
+
+  //   const lastPart = parts[parts.length - 1];
+
+  //   return !lastPart.includes("."); // Allow only if there's no existing "."
+  // };
+
   // const insertToMathField = (latex) => {
   //   if (mathFieldRef.current) {
   //     latex = latex?.replace(/\\cdot/g, "\\times");
@@ -163,6 +184,11 @@ export const useMathQuillKeyboard = () => {
 
   const insertToMathField = (latex) => {
     if (mathFieldRef.current) {
+      // Prevent multiple dots
+      // if (!isValidDecimalInput(mathFieldRef.current, latex)) {
+      //   return;
+      // }
+
       latex = latex?.replace(/\\cdot/g, "\\times");
       if (latex === "+" || latex === "-") {
         mathFieldRef.current.write(latex);
@@ -291,10 +317,16 @@ export const useMathQuillKeyboard = () => {
 
       const problematicOperators = ["+", "-", "*"];
 
+      // Prevent multiple decimal points in a single number
+      // if (!isValidDecimalInput(mathField, key)) {
+      //   event.preventDefault();
+      //   return;
+      // }
+
       if (problematicOperators.includes(key)) {
         const cursorLatex = mathField.latex();
 
-        if (cursorLatex.includes("^")) {
+        if (cursorLatex.includes("^") || cursorLatex.includes("\\frac")) {
           event.preventDefault();
           mathField.write(key === "*" ? "\\times" : key);
           mathField.focus();
