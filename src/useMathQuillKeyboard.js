@@ -282,9 +282,33 @@ export const useMathQuillKeyboard = () => {
     setError(result === "Error: Invalid expression");
   }, [result]);
 
+  useEffect(() => {
+    const handleKeydown = (event) => {
+      if (!mathFieldRef.current) return;
+
+      const mathField = mathFieldRef.current;
+      const key = event.key;
+
+      const problematicOperators = ["+", "-", "*"];
+
+      if (problematicOperators.includes(key)) {
+        const cursorLatex = mathField.latex();
+
+        if (cursorLatex.includes("^")) {
+          event.preventDefault();
+          mathField.write(key === "*" ? "\\times" : key);
+          mathField.focus();
+        }
+      }
+    };
+
+    document.addEventListener("keydown", handleKeydown);
+    return () => document.removeEventListener("keydown", handleKeydown);
+  }, []);
+
   const clearScreen = () => {
     if (mathFieldRef.current) {
-      mathFieldRef.current.latex(""); // Clears MathQuill input
+      mathFieldRef.current.latex("");
     }
     setExpression("");
     setResult(null);
