@@ -226,6 +226,11 @@ export const useMathQuillKeyboard = () => {
       });
     }
 
+    // Remove unnecessary `{}` in exponents while keeping structure
+    mathjs = mathjs.replace(/\^\{([^{}]+)\}/g, "^($1)"); // Ensure correct exponentiation
+    // Fix for negative exponentiation issues
+    mathjs = mathjs.replace(/-\((\d+\^\d+)\)/g, "-$1");
+
     // Fractions (handling nested fractions)
 
     // For Nerdamer
@@ -276,9 +281,6 @@ export const useMathQuillKeyboard = () => {
         }
       }
     );
-
-    // Fix for negative exponentiation issues
-    mathjs = mathjs.replace(/-\((\d+\^\d+)\)/g, "-$1");
 
     // Parentheses
     mathjs = mathjs.replace(/\\left\(/g, "(").replace(/\\right\)/g, ")");
@@ -388,6 +390,8 @@ export const useMathQuillKeyboard = () => {
       };
 
       const parsedExpression = latexToMathjs(expression);
+
+      console.log("parsedExpression :>> ", parsedExpression);
 
       if (parsedExpression.includes("=")) {
         const [varName, cmd] = parsedExpression.split("=");
