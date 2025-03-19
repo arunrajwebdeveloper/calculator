@@ -330,39 +330,39 @@ export const useMathQuillKeyboard = () => {
 
   // used to prevent focus missing while x^y
 
-  // useEffect(() => {
-  //   const handleKeydown = (event) => {
-  //     if (!mathFieldRef.current) return;
+  useEffect(() => {
+    const handleKeydown = (event) => {
+      if (!mathFieldRef.current) return;
 
-  //     const mathField = mathFieldRef.current;
-  //     const key = event.key;
+      const mathField = mathFieldRef.current;
+      const key = event.key;
 
-  //     const problematicOperators = ["+", "-", "*"];
+      const problematicOperators = ["+", "-", "*"];
 
-  //     // Prevent multiple decimal points in a single number
-  //     // if (!isValidDecimalInput(mathField, key)) {
-  //     //   event.preventDefault();
-  //     //   return;
-  //     // }
+      // Prevent multiple decimal points in a single number
+      // if (!isValidDecimalInput(mathField, key)) {
+      //   event.preventDefault();
+      //   return;
+      // }
 
-  //     if (problematicOperators.includes(key)) {
-  //       const cursorLatex = mathField.latex();
+      if (problematicOperators.includes(key)) {
+        const cursorLatex = mathField.latex();
 
-  //       if (
-  //         cursorLatex.includes("^") ||
-  //         cursorLatex.includes("\\frac") ||
-  //         cursorLatex.includes("\\left")
-  //       ) {
-  //         event.preventDefault();
-  //         mathField.write(key === "*" ? "\\times" : key);
-  //         mathField.focus();
-  //       }
-  //     }
-  //   };
+        if (
+          cursorLatex.includes("^") ||
+          cursorLatex.includes("\\frac") ||
+          cursorLatex.includes("\\left")
+        ) {
+          event.preventDefault();
+          mathField.write(key === "*" ? "\\times" : key);
+          mathField.focus();
+        }
+      }
+    };
 
-  //   document.addEventListener("keydown", handleKeydown);
-  //   return () => document.removeEventListener("keydown", handleKeydown);
-  // }, []);
+    document.addEventListener("keydown", handleKeydown);
+    return () => document.removeEventListener("keydown", handleKeydown);
+  }, []);
 
   const clearScreen = () => {
     if (mathFieldRef.current) {
