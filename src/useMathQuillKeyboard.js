@@ -153,27 +153,6 @@ export const useMathQuillKeyboard = () => {
     });
   };
 
-  // const isValidDecimalInput = (mathField, key) => {
-  //   if (key !== ".") return true; // Only check for "."
-
-  //   const cursorLatex = mathField.latex();
-
-  //   // Find the last complete number segment before the cursor
-  //   const match = cursorLatex.match(/(\d*\.?\d*)$/);
-  //   if (match && match[0].includes(".")) {
-  //     return false; // Block extra decimals
-  //   }
-
-  //   // Split by operators & brackets
-  //   const parts = cursorLatex.split(
-  //     /[\+\-\*\\div\\cdot\\times\\frac\%/\^\(\)\[\]\s]/
-  //   );
-
-  //   const lastPart = parts[parts.length - 1];
-
-  //   return !lastPart.includes("."); // Allow only if there's no existing "."
-  // };
-
   // const insertToMathField = (latex) => {
   //   if (mathFieldRef.current) {
   //     latex = latex?.replace(/\\cdot/g, "\\times");
@@ -184,17 +163,16 @@ export const useMathQuillKeyboard = () => {
 
   const insertToMathField = (latex) => {
     if (mathFieldRef.current) {
-      // Prevent multiple dots
-      // if (!isValidDecimalInput(mathFieldRef.current, latex)) {
-      //   return;
+      latex = latex?.replace(/\\cdot/g, "\\times");
+
+      // focus missing in exponent
+      // if (latex === "+" || latex === "-") {
+      //   mathFieldRef.current.write(latex);
+      // } else {
+      //   mathFieldRef.current.cmd(latex);
       // }
 
-      latex = latex?.replace(/\\cdot/g, "\\times");
-      if (latex === "+" || latex === "-") {
-        mathFieldRef.current.write(latex);
-      } else {
-        mathFieldRef.current.cmd(latex);
-      }
+      mathFieldRef.current.cmd(latex);
       mathFieldRef.current.focus();
     }
   };
@@ -332,39 +310,39 @@ export const useMathQuillKeyboard = () => {
 
   // used to prevent focus missing while x^y
 
-  useEffect(() => {
-    const handleKeydown = (event) => {
-      if (!mathFieldRef.current) return;
+  // useEffect(() => {
+  //   const handleKeydown = (event) => {
+  //     if (!mathFieldRef.current) return;
 
-      const mathField = mathFieldRef.current;
-      const key = event.key;
+  //     const mathField = mathFieldRef.current;
+  //     const key = event.key;
 
-      const problematicOperators = ["+", "-", "*"];
+  //     const problematicOperators = ["+", "-", "*"];
 
-      // Prevent multiple decimal points in a single number
-      // if (!isValidDecimalInput(mathField, key)) {
-      //   event.preventDefault();
-      //   return;
-      // }
+  //     // Prevent multiple decimal points in a single number
+  //     // if (!isValidDecimalInput(mathField, key)) {
+  //     //   event.preventDefault();
+  //     //   return;
+  //     // }
 
-      if (problematicOperators.includes(key)) {
-        const cursorLatex = mathField.latex();
+  //     if (problematicOperators.includes(key)) {
+  //       const cursorLatex = mathField.latex();
 
-        if (
-          cursorLatex.includes("^") ||
-          cursorLatex.includes("\\frac") ||
-          cursorLatex.includes("\\left")
-        ) {
-          event.preventDefault();
-          mathField.write(key === "*" ? "\\times" : key);
-          mathField.focus();
-        }
-      }
-    };
+  //       if (
+  //         cursorLatex.includes("^") ||
+  //         cursorLatex.includes("\\frac") ||
+  //         cursorLatex.includes("\\left")
+  //       ) {
+  //         event.preventDefault();
+  //         mathField.write(key === "*" ? "\\times" : key);
+  //         mathField.focus();
+  //       }
+  //     }
+  //   };
 
-    document.addEventListener("keydown", handleKeydown);
-    return () => document.removeEventListener("keydown", handleKeydown);
-  }, []);
+  //   document.addEventListener("keydown", handleKeydown);
+  //   return () => document.removeEventListener("keydown", handleKeydown);
+  // }, []);
 
   const clearScreen = () => {
     if (mathFieldRef.current) {
