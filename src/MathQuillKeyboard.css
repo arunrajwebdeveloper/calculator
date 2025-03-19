@@ -161,6 +161,15 @@ button.key-btn img {
   border: 1px solid #ffc050;
 }
 
+/* SUPER SCRIPT STYLE */
+
+.mq-math-mode .mq-supsub.mq-sup-only .mq-sup {
+  font-size: 16px !important;
+}
+.mq-math-mode .mq-supsub.mq-sup-only {
+  vertical-align: 1em !important;
+}
+
 /* +++++++++++++++++++++++++ */
 
 .page-wrap {

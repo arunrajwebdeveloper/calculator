@@ -5,7 +5,10 @@ import { useMathQuillKeyboard } from "./useMathQuillKeyboard";
 import { Form } from "./Form";
 import { equal, clear } from "./images";
 
-addStyles();
+// Initialize MathQuill
+if (typeof window !== "undefined") {
+  addStyles();
+}
 
 const MathQuillKeyboard = () => {
   const {
