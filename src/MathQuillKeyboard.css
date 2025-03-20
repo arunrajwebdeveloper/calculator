@@ -56,7 +56,7 @@
   width: 50px;
   cursor: pointer;
   font-size: 16px;
-  background-color: #e0eaf9;
+  background-color: #97bbef;
   color: #000;
   border: 1px solid #edeef3;
   border-radius: 4px;
@@ -68,22 +68,22 @@
 
 .btn-keys .key-btn.operation {
   /* border-color: #000; */
-  background-color: #d3f7d0;
+  background-color: #b4d76a;
 }
 .btn-keys .key-btn.digit {
-  background-color: #f3f1b4;
+  background-color: #83d381;
 }
 
 .btn-keys .key-btn.basic-operation,
 .btn-keys .key-btn.other-operation {
   border-color: #f3dfbf;
-  background-color: #ffdead;
+  background-color: #ffc976;
 }
 button.key-btn.other-operation.equal {
   height: 105px;
 }
 button.key-btn.other-operation.ac {
-  background-color: #ff6363;
+  background-color: #eb3e3e;
   border-color: #ff8a8a;
   color: #fff;
 }
