@@ -103,7 +103,6 @@ export const useMathQuillKeyboard = () => {
       label: "X\u207F",
       cmd: "^",
       type: "operation",
-
       // icon: power
     },
     // { label: "π", cmd: "\\pi" },
@@ -116,7 +115,6 @@ export const useMathQuillKeyboard = () => {
 
   const basicOperation = [
     { label: "÷", cmd: "÷", type: "operation", icon: divide },
-    // { label: "÷", cmd: "÷", type: "operation", icon: divide },
     // { label: "*", cmd: "\\cdot", type: "operation", icon: multiply },
     { label: "*", cmd: "*", type: "operation", icon: multiply },
     { label: "-", cmd: "-", type: "operation", icon: minus },
@@ -160,6 +158,7 @@ export const useMathQuillKeyboard = () => {
 
   const insertToMathField = (latex) => {
     if (mathFieldRef.current) {
+      // latex = latex?.replace(/\\cdot/g, "\\times");
       mathFieldRef.current.cmd(latex);
       mathFieldRef.current.focus();
     }
@@ -311,19 +310,6 @@ export const useMathQuillKeyboard = () => {
     mathjs = mathjs.replace(/\\times/g, "*");
     mathjs = mathjs.replace(/\\div/g, "/");
 
-    // Ensure exponents `{}` are pre-evaluated before passing to Nerdamer
-    // mathjs = mathjs.replace(
-    //   /(\d+|\w+)\^\{([^{}]+)\}/g,
-    //   (match, base, exponent) => {
-    //     try {
-    //       let evaluatedExponent = nerdamer(exponent).evaluate().text(); // Evaluate the exponent first
-    //       return `(${base}^(${evaluatedExponent}))`; // Nerdamer understands this format
-    //     } catch (error) {
-    //       return match; // If error, return the original match
-    //     }
-    //   }
-    // );
-
     // Convert exponents **before** passing to Nerdamer
     mathjs = mathjs.replace(
       /([a-zA-Z0-9()\s]+)\^\{([^{}]*)\}/g,
@@ -388,42 +374,6 @@ export const useMathQuillKeyboard = () => {
   useEffect(() => {
     setError(result === "Error: Invalid expression");
   }, [result]);
-
-  // used to prevent focus missing while x^y
-
-  // useEffect(() => {
-  //   const handleKeydown = (event) => {
-  //     if (!mathFieldRef.current) return;
-
-  //     const mathField = mathFieldRef.current;
-  //     const key = event.key;
-
-  //     const problematicOperators = ["+", "-", "*"];
-
-  //     // Prevent multiple decimal points in a single number
-  //     // if (!isValidDecimalInput(mathField, key)) {
-  //     //   event.preventDefault();
-  //     //   return;
-  //     // }
-
-  //     if (problematicOperators.includes(key)) {
-  //       const cursorLatex = mathField.latex();
-
-  //       if (
-  //         cursorLatex.includes("^") ||
-  //         cursorLatex.includes("\\frac") ||
-  //         cursorLatex.includes("\\left")
-  //       ) {
-  //         event.preventDefault();
-  //         mathField.write(key === "*" ? "\\times" : key);
-  //         mathField.focus();
-  //       }
-  //     }
-  //   };
-
-  //   document.addEventListener("keydown", handleKeydown);
-  //   return () => document.removeEventListener("keydown", handleKeydown);
-  // }, []);
 
   const clearScreen = () => {
     if (mathFieldRef.current) {
