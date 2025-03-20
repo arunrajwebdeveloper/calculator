@@ -33,7 +33,7 @@ export const useMathQuillKeyboard = () => {
   const [scope, setScope] = useImmer([]);
   const [error, setError] = useImmer(false);
 
-  // console.log("expression :>> ", expression);
+  console.log("expression :>> ", expression);
 
   const [definedVariables, setDefinedVariables] = useImmer([
     { label: "D", cmd: "240000" },
