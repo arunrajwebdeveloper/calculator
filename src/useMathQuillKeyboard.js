@@ -143,6 +143,8 @@ export const useMathQuillKeyboard = () => {
     spaceBehavesLikeTab: true, // Makes space key navigate fields (for fractions, roots, etc.)
     leftRightIntoCmdGoes: "up", // Moves cursor out of fractions/superscripts properly
     supSubsRequireOperand: true, // Prevents accidental subscripts/superscripts without a base
+    // autoCommands: "sqrt cdot times div",
+    // autoOperatorNames: 'sin cos tan log ln',
   };
 
   const findExistingVar = (keyname) => {
