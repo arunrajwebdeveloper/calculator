@@ -33,7 +33,7 @@ export const useMathQuillKeyboard = () => {
   const [scope, setScope] = useImmer([]);
   const [error, setError] = useImmer(false);
 
-  console.log("expression :>> ", expression);
+  // console.log("expression :>> ", expression);
 
   const [definedVariables, setDefinedVariables] = useImmer([
     { label: "D", cmd: "240000" },
@@ -116,7 +116,9 @@ export const useMathQuillKeyboard = () => {
 
   const basicOperation = [
     { label: "÷", cmd: "÷", type: "operation", icon: divide },
-    { label: "*", cmd: "\\cdot", type: "operation", icon: multiply },
+    // { label: "÷", cmd: "÷", type: "operation", icon: divide },
+    // { label: "*", cmd: "\\cdot", type: "operation", icon: multiply },
+    { label: "*", cmd: "*", type: "operation", icon: multiply },
     { label: "-", cmd: "-", type: "operation", icon: minus },
     { label: "+", cmd: "+", type: "operation", icon: plus },
   ];
@@ -136,7 +138,8 @@ export const useMathQuillKeyboard = () => {
   const mathQuillConfig = {
     restrictMismatchedBrackets: true, // Ensures brackets are always matched
     autoSubscriptNumerals: true, // Auto subscript for numerals (V1 → V₁)
-    charsThatBreakOutOfSupSub: "+-=<>", // Allow breaking out of sub/superscript
+    charsThatBreakOutOfSupSub: "+-*÷=<>/", // Allow breaking out of sub/superscript
+    // charsThatBreakOutOfSupSub: "+-=<>", // Allow breaking out of sub/superscript
     spaceBehavesLikeTab: true, // Makes space key navigate fields (for fractions, roots, etc.)
     leftRightIntoCmdGoes: "up", // Moves cursor out of fractions/superscripts properly
     supSubsRequireOperand: true, // Prevents accidental subscripts/superscripts without a base
@@ -153,29 +156,104 @@ export const useMathQuillKeyboard = () => {
     });
   };
 
+  const insertToMathField = (latex) => {
+    if (mathFieldRef.current) {
+      mathFieldRef.current.cmd(latex);
+      mathFieldRef.current.focus();
+    }
+  };
+
   // const insertToMathField = (latex) => {
   //   if (mathFieldRef.current) {
-  //     latex = latex?.replace(/\\cdot/g, "\\times");
+  //     // latex = latex?.replace(/\\cdot/g, "\\times");
+
+  //     // focus missing in exponent
+  //     // if (latex === "+" || latex === "-") {
+  //     //   mathFieldRef.current.write(latex);
+  //     // } else {
+  //     //   mathFieldRef.current.cmd(latex);
+  //     // }
+
+  //     const cursorLatex = mathFieldRef.current.latex();
+
+  //     // Operators that should move the cursor out of exponent
+  //     const exitExponentOperators = [
+  //       "*",
+  //       "/",
+  //       "\\times",
+  //       "\\cdot",
+  //       "\\div",
+  //       "+",
+  //       "-",
+  //       "÷",
+  //     ];
+
+  //     // if (exitExponentOperators.includes(latex)) {
+  //     //   // Check if the cursor is inside an exponent
+  //     //   if (
+  //     //     cursorLatex.includes("^") &&
+  //     //     mathFieldRef.current.keystroke("Right")
+  //     //   ) {
+  //     //     mathFieldRef.current.keystroke("Right"); // Move cursor out of exponent
+  //     //   }
+  //     // }
+
+  //     if (exitExponentOperators.includes(latex)) {
+  //       // Check if inside an exponent without surrounding brackets
+  //       const exponentPattern = /\^\{([^{}]+)\}$/;
+  //       const isInExponent =
+  //         cursorLatex.includes("^") && !exponentPattern.test(cursorLatex);
+
+  //       if (isInExponent) {
+  //         mathFieldRef.current.keystroke("Right"); // Move cursor out of exponent
+  //       }
+  //     }
+
   //     mathFieldRef.current.cmd(latex);
   //     mathFieldRef.current.focus();
   //   }
   // };
 
-  const insertToMathField = (latex) => {
-    if (mathFieldRef.current) {
-      latex = latex?.replace(/\\cdot/g, "\\times");
+  // useEffect(() => {
+  //   const handleKeydown = (event) => {
+  //     if (!mathFieldRef.current) return;
 
-      // focus missing in exponent
-      // if (latex === "+" || latex === "-") {
-      //   mathFieldRef.current.write(latex);
-      // } else {
-      //   mathFieldRef.current.cmd(latex);
-      // }
+  //     const mathField = mathFieldRef.current;
+  //     const key = event.key;
 
-      mathFieldRef.current.cmd(latex);
-      mathFieldRef.current.focus();
-    }
-  };
+  //     const exitExponentOperators = [
+  //       "*",
+  //       "/",
+  //       "\\times",
+  //       "\\cdot",
+  //       "\\div",
+  //       "+",
+  //       "-",
+  //       "÷",
+  //     ];
+
+  //     // Get current LaTeX expression
+  //     let cursorLatex = mathField.latex();
+
+  //     if (exitExponentOperators.includes(key)) {
+  //       // Check if inside an exponent without a surrounding bracket
+  //       const exponentPattern = /\^\{([^{}]+)\}$/; // Matches ^{...}
+
+  //       const isInExponent =
+  //         cursorLatex.includes("^") && !exponentPattern.test(cursorLatex);
+
+  //       console.log("EVENT :>> ", { key, isInExponent });
+
+  //       if (isInExponent) {
+  //         console.log("CURSOR MOVE RIGHT");
+  //         mathField.keystroke("Right"); // Move cursor out of exponent
+  //       }
+  //     }
+  //   };
+
+  //   document.addEventListener("keydown", handleKeydown);
+  //   return () => document.removeEventListener("keydown", handleKeydown);
+  // }, []);
 
   const arrayToObject = (array) => {
     return array?.length > 0

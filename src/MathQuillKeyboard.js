@@ -42,7 +42,7 @@ const MathQuillKeyboard = () => {
               latex={expression}
               onChange={(mathField) => {
                 let exp = mathField.latex();
-                exp = exp?.replace(/\\cdot/g, "\\times");
+                // exp = exp?.replace(/\\cdot/g, "\\times");
                 setExpression(exp);
               }}
               mathquillDidMount={(mathField) => {
