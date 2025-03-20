@@ -285,7 +285,8 @@ export const useMathQuillKeyboard = () => {
     }
 
     // Remove unnecessary `{}` in exponents while keeping structure
-    mathjs = mathjs.replace(/\^\{([^{}]+)\}/g, "^($1)"); // Ensure correct exponentiation
+    // mathjs = mathjs.replace(/\^\{([^{}]+)\}/g, "^($1)"); // Ensure correct exponentiation
+    mathjs = mathjs.replace(/\^\{([^{}]+)\}/g, "^$1"); // Ensure correct exponentiation
     // Fix for negative exponentiation issues
     mathjs = mathjs.replace(/-\((\d+\^\d+)\)/g, "-$1");
 
