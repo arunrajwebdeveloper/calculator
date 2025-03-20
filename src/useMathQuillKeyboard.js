@@ -283,6 +283,9 @@ export const useMathQuillKeyboard = () => {
       });
     }
 
+    // Ensure leading decimal numbers are converted (".5" → "0.5")
+    mathjs = mathjs.replace(/(?<!\d)\.(\d+)/g, "0.$1");
+
     // Remove unnecessary `{}` in exponents while keeping structure
     // mathjs = mathjs.replace(/\^\{([^{}]+)\}/g, "^($1)"); // Ensure correct exponentiation
     mathjs = mathjs.replace(/\^\{([^{}]+)\}/g, "^$1"); // Ensure correct exponentiation
